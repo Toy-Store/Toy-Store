@@ -18,4 +18,14 @@ class ProductController extends AbstractController
       $this->repo = $repo;
    }
 
+   /**
+     * @Route("/", name="product_show")
+     */
+    public function readAllAction(): Response
+    {
+        $products = $this->repo->findAll();
+        return $this->render('product/index.html.twig', [
+            'products'=>$products
+        ]);
+    }
 }
