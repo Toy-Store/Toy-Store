@@ -13,10 +13,10 @@ class Supplier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $suppliername = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $address = null;
 
     public function getId(): ?int
@@ -29,7 +29,7 @@ class Supplier
         return $this->suppliername;
     }
 
-    public function setSuppliername(?string $suppliername): self
+    public function setSuppliername(string $suppliername): self
     {
         $this->suppliername = $suppliername;
 
@@ -41,7 +41,7 @@ class Supplier
         return $this->address;
     }
 
-    public function setAddress(?string $address): self
+    public function setAddress(string $address): self
     {
         $this->address = $address;
 
