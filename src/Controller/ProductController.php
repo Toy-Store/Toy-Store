@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -104,5 +105,15 @@ class ProductController extends AbstractController
         return $newFilename;
     }
 
-
-}
+    /**
+     * @Route("/delete/{id}",name="product_delete",requirements={"id"="\d+"})
+     */
+    
+     public function deleteAction(Request $request, Product $p): Response
+     {
+         $this->repo->remove($p,true);
+         return $this->redirectToRoute('product_show', [], Response::HTTP_SEE_OTHER);
+     }
+ 
+ }
+ 
