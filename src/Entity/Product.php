@@ -43,6 +43,9 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Supplier $supppro = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $productinformation = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -175,6 +178,18 @@ class Product
     public function setSupppro(?Supplier $supppro): self
     {
         $this->supppro = $supppro;
+
+        return $this;
+    }
+
+    public function getProductinformation(): ?string
+    {
+        return $this->productinformation;
+    }
+
+    public function setProductinformation(string $productinformation): self
+    {
+        $this->productinformation = $productinformation;
 
         return $this;
     }

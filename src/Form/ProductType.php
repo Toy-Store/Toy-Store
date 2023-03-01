@@ -30,7 +30,8 @@ class  ProductType extends AbstractType
         ])
         ->add('save',SubmitType::class,[
             'label' => "Cofirm"
-        ]);
+        ])
+        ->add('productinformation');
     }
 }
 ?>

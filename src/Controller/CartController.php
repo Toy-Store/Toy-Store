@@ -39,4 +39,13 @@ class CartController extends AbstractController
          $repo->save($card, true);
         return $this->redirectToRoute('app_cart');
     }
+    /**
+    * @Route("/deletecart/{id}",name="cart_delete")
+    */
+   
+    public function deleteAction(Request $req, Cart $cart, CartRepository $repo): Response
+    {
+        $repo->remove($cart,true);
+        return $this->redirectToRoute('app_cart');
+    }
 }
