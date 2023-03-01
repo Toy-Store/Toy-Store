@@ -35,32 +35,32 @@ class ProductController extends AbstractController
     }
     
 
-     /**
-     * @Route("/add", name="product_create")
-     */
-    public function createAction(Request $req, SluggerInterface $slugger): Response
-    {
-        
-        $p = new Product();
-        $form = $this->createForm(ProductType::class, $p);
+    /**
+    * @Route("/add", name="product_create")
+    */
+   public function createAction(Request $req, SluggerInterface $slugger): Response
+   {
+       
+       $p = new Product();
+       $form = $this->createForm(ProductType::class, $p);
 
-        $form->handleRequest($req);
-        if($form->isSubmitted() && $form->isValid()){
-            if($p->getCreated()===null){
-                $p->setCreated(new \DateTime());
-            }
-            $imgFile = $form->get('file')->getData();
-            if ($imgFile) {
-                $newFilename = $this->uploadImage($imgFile,$slugger);
-                $p->setImage($newFilename);
-            }
-            $this->repo->save($p,true);
-            return $this->redirectToRoute('product_show', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->render("product/form.html.twig",[
-            'form' => $form->createView()
-        ]);
-    }
+       $form->handleRequest($req);
+       if($form->isSubmitted() && $form->isValid()){
+           if($p->getCreated()===null){
+               $p->setCreated(new \DateTime());
+           }
+           $imgFile = $form->get('file')->getData();
+           if ($imgFile) {
+               $newFilename = $this->uploadImage($imgFile,$slugger);
+               $p->setImage($newFilename);
+           }
+           $this->repo->save($p,true);
+           return $this->redirectToRoute('product_show', [], Response::HTTP_SEE_OTHER);
+       }
+       return $this->render("product/form.html.twig",[
+           'form' => $form->createView()
+       ]);
+   }
 
          /**
      * @Route("/edit/{id}", name="product_edit",requirements={"id"="\d+"})
