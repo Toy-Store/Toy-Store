@@ -49,4 +49,32 @@ class SupplierController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+             /**
+     * @Route("/edit/{id}", name="supplier_edit",requirements={"id"="\d+"})
+     */
+    public function editAction(Request $req, Supplier $s,
+    SluggerInterface $slugger): Response
+    {
+        
+        $form = $this->createForm(SupplierType::class, $s);   
+        $form->handleRequest($req);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->repo->save($s,true);
+            return $this->redirectToRoute('supplier_show', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render("supplier/form.html.twig",[
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/delete/{id}",name="supplier_delete",requirements={"id"="\d+"})
+     */
+    
+     public function deleteAction(Request $request, Supplier $s): Response
+     {
+         $this->repo->remove($s,true);
+         return $this->redirectToRoute('supplier_show', [], Response::HTTP_SEE_OTHER);
+     }
 }

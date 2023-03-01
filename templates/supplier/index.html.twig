@@ -25,9 +25,9 @@
                         <tbody class="table-border-bottom-0">
                           {% for s in suppliers %}
                               <tr>
-                                  <td>{{ p.id}}</td>
-                                  <td>{{ p.suppliername}}</td>
-                                  <td>{{ p.address}}</td>
+                                  <td>{{ s.id}}</td>
+                                  <td>{{ s.suppliername}}</td>
+                                  <td>{{ s.address}}</td>
                                   <td>
                                     <a href="{{path('supplier_edit',{'id':s.id})}}">Edit</a>
                                   <a href="{{path('supplier_delete',{'id':s.id})}}">Delete</a></td>
