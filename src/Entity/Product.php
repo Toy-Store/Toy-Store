@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,20 @@ class Product
 
     #[ORM\Column]
     private ?float $quantity = null;
+
+    #[ORM\OneToMany(mappedBy: 'procart', targetEntity: Cart::class)]
+    private Collection $carts;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $catepro = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Supplier $supppro = null;
+
+    public function __construct()
+    {
+        $this->carts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +121,60 @@ class Product
     public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts->add($cart);
+            $cart->setProcart($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getProcart() === $this) {
+                $cart->setProcart(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCatepro(): ?Category
+    {
+        return $this->catepro;
+    }
+
+    public function setCatepro(?Category $catepro): self
+    {
+        $this->catepro = $catepro;
+
+        return $this;
+    }
+
+    public function getSupppro(): ?Supplier
+    {
+        return $this->supppro;
+    }
+
+    public function setSupppro(?Supplier $supppro): self
+    {
+        $this->supppro = $supppro;
 
         return $this;
     }
