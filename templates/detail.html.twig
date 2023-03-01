@@ -27,13 +27,12 @@
                         <div>  
                             <span class="product_info">Date: {{p.created|date("m/d/Y")}}<span><br> 
                             <span class="product_info">In Stock: {{p.quantity}}<span> </div>
-                            <span class="product_info">Description: {{p.productinformation}}<span> </div>
+                            {# <span class="product_info">Description: {{p.productinformation}}<span> </div> #}
                         <hr class="singleline">
                         <div class="order_info d-flex flex-row">
-                            <form action="#">
                         </div>
                         <div class="row">
-                            <form action="#" method="get">
+                            <form action="{{ path('add_cart',{"id":p.id}) }}" method="get">
                             <div class="col-lg-3 mb-4" style="margin-left: 13px;">
                                 <div class="form-group">
                                     <label for="qty_label">Quantity:</label>

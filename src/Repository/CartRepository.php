@@ -39,21 +39,43 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Cart[] Returns an array of Cart objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+    * @return Cart[] Returns an array of Cart objects
+    */
+    public function cartshow($value): array
+    {
+        return $this->createQueryBuilder('c')
+         ->select('c.id, p.name , c.quantity, p.price, p.image')
+             ->innerJoin('c.procart','p')
+             ->innerJoin('c.usercart','u')
+            ->where('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 
+    /*
+   SELECT c.usercart_id,SUM( c.quantity * p.price) AS "Total"
+FROM cart c, product p, user u 
+WHERE usercart_id = 2 and c.procart_id = p.id AND c.usercart_id = u.id
+*/
+
+ /**
+    * @return Cart[] Returns an array of Cart objects
+    */
+    public function sumCart($value): array
+    {
+        return $this->createQueryBuilder('c')
+         ->select('SUM( c.quantity * p.price) Total')
+             ->innerJoin('c.procart','p')
+             ->innerJoin('c.usercart','u')
+            ->where('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 //    public function findOneBySomeField($value): ?Cart
 //    {
 //        return $this->createQueryBuilder('c')
