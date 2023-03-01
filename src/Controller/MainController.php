@@ -33,19 +33,4 @@ class MainController extends AbstractController
             
         ]);
     }
-
-         /**
-     * @Route("/{id}", name="product_read",requirements={"id"="\d+"})
-     */
-    public function showAction(Product $p): Response
-    {
-        return $this->render('detail.html.twig', [
-            'p'=>$p
-        ]);
-    }
-
-
-
-
-
 }
