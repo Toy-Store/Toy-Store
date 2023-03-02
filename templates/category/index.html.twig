@@ -4,7 +4,7 @@
 
 {% block body %}
   <div className="page-heading pb-2 mt-4 mb-2 ">
-                    <h3>Manager</h3> <a href="{{path('supplier_create')}}"><button type="button" class="btn btn-outline-primary">Insert</button></a>
+                    <h3>Manager</h3> <a href="{{path('category_create')}}"><button type="button" class="btn btn-outline-primary">Insert</button></a>
                 </div>
                 <div class="page-content">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -17,20 +17,18 @@
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Supplier Name</th>
-                            <th>Address</th>
+                            <th>Category Name</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                          {% for s in suppliers %}
+                          {% for cate in categorys %}
                               <tr>
-                                  <td>{{ s.id}}</td>
-                                  <td>{{ s.suppliername}}</td>
-                                  <td>{{ s.address}}</td>
+                                  <td>{{ cate.id}}</td>
+                                  <td>{{ cate.categoryname}}</td>
                                   <td>
-                                    <a href="{{path('supplier_edit',{'id':s.id})}}">Edit</a>
-                                  <a href="{{path('supplier_delete',{'id':s.id})}}">Delete</a></td>
+                                    <a href="{{path('category_edit',{'id':cate.id})}}">Edit</a>
+                                  <a href="{{path('category_delete',{'id':cate.id})}}">Delete</a></td>
                               </tr>
                           {% endfor %}
                           

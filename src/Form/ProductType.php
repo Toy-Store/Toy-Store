@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Supplier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,7 +25,7 @@ class  ProductType extends AbstractType
             'widget' =>'single_text','required'=> false
         ])
         ->add('quantity')
-        // ->add('catepro')
+        ->add('category',EntityType::class,['class'=>Category::class,'choice_label'=>'categoryname'])
         ->add('supppro', EntityType::class,['class'=>Supplier::class,'choice_label'=>'suppliername'])
 
         ->add('file', FileType::class, [

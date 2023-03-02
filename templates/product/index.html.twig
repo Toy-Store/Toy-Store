@@ -1,6 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}ADMIN{% endblock %}
 
 {% block body %}
   <div className="page-heading pb-2 mt-4 mb-2 ">
@@ -34,7 +34,7 @@
                                   <td>{{ p.price}}</td>
                                   <td>{{ p.created|date("m/d/Y")}}</td>
                                   <td>{{ p.quantity}}</td>
-                                  {# <td>{{ p.catepro}}</td> #}
+                                  <td>{{ p.category.categoryname}}</td>
                                   <td>{{ p.supppro.suppliername}}</td>
                                  
                                   <td>{{ p.productinformation}}

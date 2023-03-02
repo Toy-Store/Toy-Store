@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 02, 2023 lúc 08:02 AM
+-- Thời gian đã tạo: Th3 02, 2023 lúc 05:39 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.15
 
@@ -34,13 +34,6 @@ CREATE TABLE `cart` (
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `cart`
---
-
-INSERT INTO `cart` (`id`, `procart_id`, `usercart_id`, `quantity`) VALUES
-(3, 1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -49,9 +42,16 @@ INSERT INTO `cart` (`id`, `procart_id`, `usercart_id`, `quantity`) VALUES
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `boy` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `girl` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `categoryname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `category`
+--
+
+INSERT INTO `category` (`id`, `categoryname`) VALUES
+(1, 'Girl'),
+(3, 'Boy');
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,9 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20230301063857', '2023-03-01 07:39:04', 26),
 ('DoctrineMigrations\\Version20230301075208', '2023-03-01 08:52:16', 142),
 ('DoctrineMigrations\\Version20230301080632', '2023-03-01 09:06:41', 127),
-('DoctrineMigrations\\Version20230301090836', '2023-03-01 10:08:44', 18);
+('DoctrineMigrations\\Version20230301090836', '2023-03-01 10:08:44', 18),
+('DoctrineMigrations\\Version20230302154258', '2023-03-02 16:43:08', 50),
+('DoctrineMigrations\\Version20230302154554', '2023-03-02 16:46:01', 117);
 
 -- --------------------------------------------------------
 
@@ -111,26 +113,25 @@ CREATE TABLE `product` (
   `price` double NOT NULL,
   `created` date NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` double NOT NULL,
-  `catepro_id` int(11) DEFAULT NULL,
   `supppro_id` int(11) DEFAULT NULL,
-  `productinformation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `productinformation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `price`, `created`, `image`, `category`, `quantity`, `catepro_id`, `supppro_id`, `productinformation`) VALUES
-(1, 'Disney Doorables Multi Peek, Series 8 Featuring Special Edition Scented Figures, Styles May Vary, Officially Licensed Kids Toys for Ages 5 Up, Gifts and Presents', 279000, '2023-03-01', 'Screenshot-2023-03-02-135016-640047479ba18.jpg', 'Girl', 100, NULL, NULL, 'Behind every door a surprise is in store with Disney Doorables Mini Peek Series 8 Collectible Figures. Unbox 5, 6, or 7 Disney figurines. Then, open the doors! Series 8 includes 58 characters from the stories of Disney’s Hercules, Alice in Wonderland, Wre'),
-(3, 'Pokemon Trading Card Game: Pokemon GO Tins (1 of 3 tins chosen at random)', 259000, '2023-03-02', 'Screenshot-2023-03-02-134718-640046a235103.jpg', 'Boy', 100, NULL, NULL, 'Let Pikachu help you to battle hard and build your Pokémon TCG collection! The Mouse Pokémon is here as a foil promo card that can help you find an Item card in your deck, and it\'s joined by another Pokemon friend as a playable foil card. Expand your coll'),
-(4, 'Minnie Mouse Collectible Mini Figure in Capsule, Styles May Vary, Party Favors and Gifts for Kids, Officially Licensed Kids Toys for Ages 3 Up, Gifts and Presents', 79000, '2023-03-02', 'Screenshot-2023-03-02-135225-640047c2388d4.jpg', 'Girl', 100, NULL, NULL, 'Surprise your biggest Minnie fan with a Disney Junior’s Minnie Mouse Mini Collectible Figure, featuring Minnie and her friends. Each figure stands 2.5” tall and features a dynamic pose. Kids will love opening the Minnie Mouse shaped capsule to reveal the'),
-(5, 'Hot Wheels 5-Car Pack of 1:64 Scale Vehicles for Kids & Collectors (Styles May Vary)', 519000, '2023-03-02', 'Screenshot-2023-03-02-135416-6400482c04c11.jpg', 'Boy', 100, NULL, NULL, 'Speed into an instant Hot Wheels collection with a race-ready pack that features five highly detailed 1:64 scale vehicles. Hot Wheels 5-Car packs deliver five times the amped up action and are perfect for car enthusiasts of all ages. With a cool unifying'),
-(6, 'Hot Wheels Car Culture Audi R8 LMS Car Play Vehicle', 299000, '2023-03-02', 'Screenshot-2023-03-02-135532-64004874465c7.jpg', 'Boy', 100, NULL, NULL, 'This premium Car Culture Assortment of 1:64 scale models is a must-have for adult collectors and enthusiasts around the world. Five unique mixes highlight Redliners, Air Heads, Modern Classics, Race Day and Cars and Donuts vehicles featuring realistic cas'),
-(7, 'Hot Wheels City T-Rex Loop and Stunt Playset, Track Set with 1 Toy Car', 259000, '2023-03-02', 'Screenshot-2023-03-02-135715-640048db0153d.jpg', 'Boy', 100, NULL, NULL, 'Knock out the dinosaur and save the day in the Hot Wheels City T-Rex Chomp-Down Playset. It features a slam launcher and 9-inch loop where kids launch their Hot Wheel cars just right to defeat the beast. When the dino gets knocked out, its eyes transition'),
-(8, 'Hot Wheels City Ultimate Octo Car Wash Playset with 1 Color Reveal Car for Kids 4 Years & Up', 259000, '2023-03-02', 'Screenshot-2023-03-02-135820-6400492122f3c.jpg', 'Boy', 100, NULL, NULL, 'The Hot Wheels City Ultimate Octo Car Wash is packed with 4+ feet of awesome features and comes with a car that offers multiple surprises to make kids want to visit again and again! Straight out of the box, the Color Reveal vehicle is covered in a green c'),
-(9, '300 Piece Plastic Army Men Toy Soldiers for Boys with Military Figures, Tanks, Planes, Flags, Accessories', 600000, '2023-03-02', 'Screenshot-2023-03-02-135945-64004969d4358.jpg', 'Boy', 100, NULL, NULL, 'Keep your children busy and let their imagination run wild with this toy soldiers\' play set. It\'s also the perfect tool for educating your children. This package includes 300 miniature soldier figures in various battle poses with weapons, tanks, planes, s');
+INSERT INTO `product` (`id`, `name`, `price`, `created`, `image`, `quantity`, `supppro_id`, `productinformation`, `category_id`) VALUES
+(1, 'Disney Doorables Multi Peek, Series 8 Featuring Special Edition Scented Figures, Styles May Vary, Officially Licensed Kids Toys for Ages 5 Up, Gifts and Presents', 279000, '2023-03-01', 'Screenshot-2023-03-02-135016-640047479ba18.jpg', 100, 3, 'Behind every door a surprise is in store with Disney Doorables Mini Peek Series 8 Collectible Figures. Unbox 5, 6, or 7 Disney figurines. Then, open the doors! Series 8 includes 58 characters from the stories of Disney’s Hercules, Alice in Wonderland, Wre', 1),
+(3, 'Pokemon Trading Card Game: Pokemon GO Tins (1 of 3 tins chosen at random)', 259000, '2023-03-02', 'Screenshot-2023-03-02-134718-640046a235103.jpg', 100, 3, 'Let Pikachu help you to battle hard and build your Pokémon TCG collection! The Mouse Pokémon is here as a foil promo card that can help you find an Item card in your deck, and it\'s joined by another Pokemon friend as a playable foil card. Expand your coll', 3),
+(4, 'Minnie Mouse Collectible Mini Figure in Capsule, Styles May Vary, Party Favors and Gifts for Kids, Officially Licensed Kids Toys for Ages 3 Up, Gifts and Presents', 79000, '2023-03-02', 'Screenshot-2023-03-02-135225-640047c2388d4.jpg', 100, 3, 'Surprise your biggest Minnie fan with a Disney Junior’s Minnie Mouse Mini Collectible Figure, featuring Minnie and her friends. Each figure stands 2.5” tall and features a dynamic pose. Kids will love opening the Minnie Mouse shaped capsule to reveal the', 1),
+(5, 'Hot Wheels 5-Car Pack of 1:64 Scale Vehicles for Kids & Collectors (Styles May Vary)', 519000, '2023-03-02', 'Screenshot-2023-03-02-135416-6400482c04c11.jpg', 100, 3, 'Speed into an instant Hot Wheels collection with a race-ready pack that features five highly detailed 1:64 scale vehicles. Hot Wheels 5-Car packs deliver five times the amped up action and are perfect for car enthusiasts of all ages. With a cool unifying', 3),
+(6, 'Hot Wheels Car Culture Audi R8 LMS Car Play Vehicle', 299000, '2023-03-02', 'Screenshot-2023-03-02-135532-64004874465c7.jpg', 100, 3, 'This premium Car Culture Assortment of 1:64 scale models is a must-have for adult collectors and enthusiasts around the world. Five unique mixes highlight Redliners, Air Heads, Modern Classics, Race Day and Cars and Donuts vehicles featuring realistic cas', 3),
+(7, 'Hot Wheels City T-Rex Loop and Stunt Playset, Track Set with 1 Toy Car', 259000, '2023-03-02', 'Screenshot-2023-03-02-135715-640048db0153d.jpg', 100, 3, 'Knock out the dinosaur and save the day in the Hot Wheels City T-Rex Chomp-Down Playset. It features a slam launcher and 9-inch loop where kids launch their Hot Wheel cars just right to defeat the beast. When the dino gets knocked out, its eyes transition', 3),
+(8, 'Hot Wheels City Ultimate Octo Car Wash Playset with 1 Color Reveal Car for Kids 4 Years & Up', 259000, '2023-03-02', 'Screenshot-2023-03-02-135820-6400492122f3c.jpg', 100, 3, 'The Hot Wheels City Ultimate Octo Car Wash is packed with 4+ feet of awesome features and comes with a car that offers multiple surprises to make kids want to visit again and again! Straight out of the box, the Color Reveal vehicle is covered in a green c', 3),
+(9, '300 Piece Plastic Army Men Toy Soldiers for Boys with Military Figures, Tanks, Planes, Flags, Accessories', 600000, '2023-03-02', 'Screenshot-2023-03-02-135945-64004969d4358.jpg', 100, 3, 'Keep your children busy and let their imagination run wild with this toy soldiers\' play set. It\'s also the perfect tool for educating your children. This package includes 300 miniature soldier figures in various battle poses with weapons, tanks, planes, s', 3);
 
 -- --------------------------------------------------------
 
@@ -211,8 +212,8 @@ ALTER TABLE `messenger_messages`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D34A04AD11A3FBD3` (`catepro_id`),
-  ADD KEY `IDX_D34A04AD768DD4D5` (`supppro_id`);
+  ADD KEY `IDX_D34A04AD768DD4D5` (`supppro_id`),
+  ADD KEY `IDX_D34A04AD12469DE2` (`category_id`);
 
 --
 -- Chỉ mục cho bảng `supplier`
@@ -241,7 +242,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `messenger_messages`
@@ -253,13 +254,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
@@ -282,7 +283,7 @@ ALTER TABLE `cart`
 -- Các ràng buộc cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `FK_D34A04AD11A3FBD3` FOREIGN KEY (`catepro_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `FK_D34A04AD12469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `FK_D34A04AD768DD4D5` FOREIGN KEY (`supppro_id`) REFERENCES `supplier` (`id`);
 COMMIT;
 

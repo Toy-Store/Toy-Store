@@ -2,26 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\SupplierRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SupplierRepository::class)]
-class Supplier
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $suppliername = null;
+    #[ORM\Column(length: 255)]
+    private ?string $categoryname = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $address = null;
-
-    #[ORM\OneToMany(mappedBy: 'supppro', targetEntity: Product::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;
 
     public function __construct()
@@ -34,26 +31,14 @@ class Supplier
         return $this->id;
     }
 
-    public function getSuppliername(): ?string
+    public function getCategoryname(): ?string
     {
-        return $this->suppliername;
+        return $this->categoryname;
     }
 
-    public function setSuppliername(?string $suppliername): self
+    public function setCategoryname(string $categoryname): self
     {
-        $this->suppliername = $suppliername;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
+        $this->categoryname = $categoryname;
 
         return $this;
     }
@@ -70,7 +55,7 @@ class Supplier
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setSupppro($this);
+            $product->setCategory($this);
         }
 
         return $this;
@@ -80,22 +65,10 @@ class Supplier
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getSupppro() === $this) {
-                $product->setSupppro(null);
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
 
         return $this;
     }

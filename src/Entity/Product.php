@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Proxies\__CG__\App\Entity\Supplier;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -39,6 +40,9 @@ class Product
 
     #[ORM\Column(length: 255)]
     private ?string $productinformation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -160,6 +164,18 @@ class Product
     public function setProductinformation(string $productinformation): self
     {
         $this->productinformation = $productinformation;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
