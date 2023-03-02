@@ -34,7 +34,9 @@
                                   <td>{{ p.price}}</td>
                                   <td>{{ p.created|date("m/d/Y")}}</td>
                                   <td>{{ p.quantity}}</td>
-                                  <td>{{ p.category}}</td>
+                                  {# <td>{{ p.catepro}}</td> #}
+                                  <td>{{ p.supppro.suppliername}}</td>
+                                 
                                   <td>{{ p.productinformation}}
                                   <td>
                                     <a href="{{path('product_edit',{'id':p.id})}}">Edit</a>

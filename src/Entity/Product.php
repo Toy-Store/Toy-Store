@@ -28,17 +28,11 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
-
     #[ORM\Column]
     private ?float $quantity = null;
 
     #[ORM\OneToMany(mappedBy: 'procart', targetEntity: Cart::class)]
     private Collection $carts;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Category $catepro = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Supplier $supppro = null;
@@ -104,18 +98,6 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     public function getQuantity(): ?float
     {
         return $this->quantity;
@@ -154,18 +136,6 @@ class Product
                 $cart->setProcart(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCatepro(): ?Category
-    {
-        return $this->catepro;
-    }
-
-    public function setCatepro(?Category $catepro): self
-    {
-        $this->catepro = $catepro;
 
         return $this;
     }
