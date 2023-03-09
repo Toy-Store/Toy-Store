@@ -66,10 +66,10 @@ WHERE usercart_id = 2 and c.procart_id = p.id AND c.usercart_id = u.id
     */
     public function sumCart($value): array
     {
-        return $this->createQueryBuilder('c')
-         ->select('SUM( c.quantity * p.price) Total')
-             ->innerJoin('c.procart','p')
-             ->innerJoin('c.usercart','u')
+        return $this->createQueryBuilder('a')
+         ->select('SUM( a.quantity * p.price) Total')
+             ->innerJoin('a.procart','p')
+             ->innerJoin('a.usercart','u')
             ->where('u.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
